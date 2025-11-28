@@ -28,13 +28,149 @@
     <style>
       :root {
         color-scheme: light dark;
+        /* Base (midnight-like) defaults */
         --bg: #0f172a;
         --bg-alt: #020617;
+        --bg-highlight: #1f2937;
         --fg: #e5e7eb;
         --accent: #38bdf8;
         --accent-soft: rgba(56, 189, 248, 0.15);
         --border: #1e293b;
         --danger: #f97373;
+        --message-bg: rgba(15, 23, 42, 0.85);
+        --system-bg: rgba(56, 189, 248, 0.15);
+        --system-border: rgba(56, 189, 248, 0.5);
+        --outgoing-from: #0ea5e9;
+        --outgoing-to: #22c55e;
+        --app-bg: linear-gradient(145deg, #020617, #0f172a);
+        --app-shadow: 0 18px 50px rgba(15, 23, 42, 0.85);
+        --input-bg: rgba(15, 23, 42, 0.85);
+        --input-border: rgba(148, 163, 184, 0.3);
+        --input-placeholder: rgba(148, 163, 184, 0.7);
+        --button-bg: radial-gradient(circle at top left, #0ea5e9, #22c55e);
+        --button-text: #0b1120;
+        --button-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+      }
+
+      /* Themes */
+      body.theme-midnight {
+        --bg: #020617;
+        --bg-alt: #020617;
+        --bg-highlight: #1f2937;
+        --fg: #e5e7eb;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.15);
+        --border: #1e293b;
+        --danger: #f97373;
+        --message-bg: rgba(15, 23, 42, 0.9);
+        --system-bg: rgba(56, 189, 248, 0.18);
+        --system-border: rgba(56, 189, 248, 0.6);
+        --outgoing-from: #0ea5e9;
+        --outgoing-to: #22c55e;
+        --app-bg: linear-gradient(145deg, #020617, #020617);
+        --app-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
+        --input-bg: rgba(15, 23, 42, 0.9);
+        --input-border: rgba(148, 163, 184, 0.4);
+        --input-placeholder: rgba(148, 163, 184, 0.8);
+        --button-bg: radial-gradient(circle at top left, #0ea5e9, #22c55e);
+        --button-text: #020617;
+        --button-shadow: 0 10px 26px rgba(34, 197, 94, 0.45);
+      }
+
+      body.theme-love {
+        --bg: #1b0629;
+        --bg-alt: #120018;
+        --bg-highlight: #4c1d95;
+        --fg: #fee2e2;
+        --accent: #fb7185;
+        --accent-soft: rgba(251, 113, 133, 0.18);
+        --border: #4c0519;
+        --danger: #f97373;
+        --message-bg: rgba(88, 28, 135, 0.9);
+        --system-bg: rgba(251, 113, 133, 0.25);
+        --system-border: rgba(251, 113, 133, 0.75);
+        --outgoing-from: #ec4899;
+        --outgoing-to: #f97316;
+        --app-bg: linear-gradient(145deg, #120018, #4c1d95);
+        --app-shadow: 0 22px 60px rgba(76, 5, 25, 0.85);
+        --input-bg: rgba(76, 5, 89, 0.9);
+        --input-border: rgba(251, 113, 133, 0.6);
+        --input-placeholder: rgba(254, 202, 202, 0.8);
+        --button-bg: radial-gradient(circle at top left, #ec4899, #f97316);
+        --button-text: #130016;
+        --button-shadow: 0 10px 26px rgba(236, 72, 153, 0.6);
+      }
+
+      body.theme-terminal {
+        --bg: #000000;
+        --bg-alt: #00130a;
+        --bg-highlight: #000000;
+        --fg: #bbf7d0;
+        --accent: #22c55e;
+        --accent-soft: rgba(34, 197, 94, 0.12);
+        --border: #065f46;
+        --danger: #f97373;
+        --message-bg: rgba(0, 0, 0, 0.95);
+        --system-bg: rgba(34, 197, 94, 0.25);
+        --system-border: rgba(34, 197, 94, 0.85);
+        --outgoing-from: #16a34a;
+        --outgoing-to: #4ade80;
+        --app-bg: linear-gradient(145deg, #000000, #00130a);
+        --app-shadow: 0 22px 60px rgba(0, 0, 0, 0.9);
+        --input-bg: rgba(0, 0, 0, 0.9);
+        --input-border: rgba(16, 185, 129, 0.8);
+        --input-placeholder: rgba(52, 211, 153, 0.9);
+        --button-bg: linear-gradient(135deg, #16a34a, #22c55e);
+        --button-text: #01110a;
+        --button-shadow: 0 10px 26px rgba(16, 185, 129, 0.7);
+      }
+
+      body.theme-minimal {
+        --bg: #f3f4f6;
+        --bg-alt: #f9fafb;
+        --bg-highlight: #f3f4f6;
+        --fg: #111827;
+        --accent: #4b5563;
+        --accent-soft: rgba(75, 85, 99, 0.12);
+        --border: #e5e7eb;
+        --danger: #b91c1c;
+        --message-bg: rgba(255, 255, 255, 0.98);
+        --system-bg: rgba(229, 231, 235, 0.95);
+        --system-border: rgba(148, 163, 184, 0.9);
+        --outgoing-from: #d1d5db;
+        --outgoing-to: #f9fafb;
+        --app-bg: linear-gradient(145deg, #ffffff, #e5e7eb);
+        --app-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+        --input-bg: #ffffff;
+        --input-border: rgba(156, 163, 175, 0.7);
+        --input-placeholder: rgba(156, 163, 175, 0.85);
+        --button-bg: linear-gradient(135deg, #e5e7eb, #ffffff);
+        --button-text: #111827;
+        --button-shadow: 0 8px 22px rgba(156, 163, 175, 0.6);
+      }
+
+      body.theme-minimal-dark {
+        --bg: #080808;
+        --bg-alt: #080808;
+        --bg-highlight: #111111;
+        --fg: #e5e7eb;
+        --accent: #9ca3af;
+        --accent-soft: rgba(156, 163, 175, 0.18);
+        --border: #111827;
+        --danger: #f97373;
+        --message-bg: #050505;
+        --system-bg: #101010;
+        --system-border: rgba(75, 85, 99, 0.85);
+        --outgoing-from: #2f2f2f;
+        --outgoing-to: #050505;
+        --app-bg: linear-gradient(145deg, #050505, #050505);
+        --app-shadow: 0 24px 70px rgba(0, 0, 0, 1);
+        --input-bg: #101010;
+        --input-border: rgba(75, 85, 99, 0.9);
+        --input-placeholder: rgba(156, 163, 175, 0.9);
+        --button-bg: linear-gradient(135deg, #2f2f2f, #101010);
+        --button-text: #e5e7eb;
+        --button-shadow: 0 12px 32px rgba(15, 23, 42, 0.9);
       }
 
       * {
@@ -46,7 +182,7 @@
         padding: 0;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
-        background: radial-gradient(circle at top, #1f2937, var(--bg-alt));
+        background: radial-gradient(circle at top, var(--bg-highlight), var(--bg-alt));
         color: var(--fg);
         min-height: 100vh;
         display: flex;
@@ -58,8 +194,8 @@
         margin: 12px;
         border-radius: 16px;
         border: 1px solid var(--border);
-        background: linear-gradient(145deg, var(--bg-alt), var(--bg));
-        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.85);
+        background: var(--app-bg);
+        box-shadow: var(--app-shadow);
         width: 100%;
         max-width: 600px;
         display: flex;
@@ -118,6 +254,13 @@
         opacity: 0.8;
       }
 
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+      }
+
       .messages {
         flex: 1;
         padding: 12px 16px 8px;
@@ -132,7 +275,7 @@
       .message {
         padding: 6px 10px;
         border-radius: 10px;
-        background: rgba(15, 23, 42, 0.85);
+        background: var(--message-bg);
         border: 1px solid rgba(148, 163, 184, 0.25);
         align-self: flex-start;
         max-width: 80%;
@@ -143,15 +286,15 @@
       }
 
       .message--system {
-        background: var(--accent-soft);
-        border-color: rgba(56, 189, 248, 0.5);
+        background: var(--system-bg);
+        border-color: var(--system-border);
         font-size: 0.8rem;
         opacity: 0.85;
       }
 
       .message--outgoing {
         align-self: flex-end;
-        background: linear-gradient(135deg, #0ea5e9, #22c55e);
+        background: linear-gradient(135deg, var(--outgoing-from), var(--outgoing-to));
         border-color: transparent;
         color: #0b1120;
       }
@@ -181,8 +324,8 @@
         flex: 1;
         padding: 8px 10px;
         border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid var(--input-border);
+        background: var(--input-bg);
         color: var(--fg);
         font-size: 0.9rem;
         outline: none;
@@ -190,7 +333,7 @@
       }
 
       .input-row input[type="text"]::placeholder {
-        color: rgba(148, 163, 184, 0.7);
+        color: var(--input-placeholder);
       }
 
       .input-row button {
@@ -200,12 +343,12 @@
         font-size: 0.9rem;
         font-weight: 500;
         cursor: pointer;
-        background: radial-gradient(circle at top left, #0ea5e9, #22c55e);
-        color: #0b1120;
+        background: var(--button-bg);
+        color: var(--button-text);
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+        box-shadow: var(--button-shadow);
       }
 
       .input-row button:disabled {
@@ -223,6 +366,73 @@
 
       .hint span {
         white-space: nowrap;
+      }
+
+      .settings {
+        position: relative;
+      }
+
+      .settings-button {
+        border-radius: 999px;
+        background: transparent;
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        color: inherit;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.9rem;
+      }
+
+      .settings-button:hover {
+        background: rgba(148, 163, 184, 0.12);
+      }
+
+      .settings-menu {
+        position: absolute;
+        top: 110%;
+        right: 0;
+        background: var(--bg-alt);
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        box-shadow: 0 14px 40px rgba(15, 23, 42, 0.85);
+        min-width: 150px;
+        padding: 6px;
+        display: none;
+        z-index: 20;
+      }
+
+      .settings-menu.settings-menu--open {
+        display: block;
+      }
+
+      .settings-menu-title {
+        font-size: 0.72rem;
+        opacity: 0.7;
+        padding: 4px 6px 6px;
+      }
+
+      .settings-menu button {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        font-size: 0.8rem;
+        padding: 6px 8px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .settings-menu button:hover {
+        background: rgba(148, 163, 184, 0.16);
+      }
+
+      .settings-menu button.is-active {
+        background: rgba(148, 163, 184, 0.24);
       }
 
       @media (max-width: 480px) {
@@ -247,9 +457,33 @@
           <span>QRConnect</span>
           <span class="pill">LAN chat</span>
         </div>
-        <div class="status" id="status">
-          <span class="status-dot" id="statusDot"></span>
-          <span class="status-text" id="statusText">Connecting…</span>
+        <div class="header-right">
+          <div class="status" id="status">
+            <span class="status-dot" id="statusDot"></span>
+            <span class="status-text" id="statusText">Connecting…</span>
+          </div>
+          <div class="settings">
+            <button
+              id="settingsButton"
+              class="settings-button"
+              type="button"
+              aria-label="Chat settings"
+            >
+              &#9881;
+            </button>
+            <div class="settings-menu" id="settingsMenu">
+              <div class="settings-menu-title">Theme</div>
+              <button type="button" data-theme="midnight" class="is-active">
+                Midnight
+              </button>
+              <button type="button" data-theme="love">Love</button>
+              <button type="button" data-theme="terminal">Terminal</button>
+              <button type="button" data-theme="minimal">Minimal light</button>
+              <button type="button" data-theme="minimal-dark">
+                Minimal dark
+              </button>
+            </div>
+          </div>
         </div>
       </header>
       <main class="messages" id="messages" aria-live="polite"></main>
@@ -279,11 +513,14 @@
         const sendButtonEl = document.getElementById("sendButton");
         const statusDotEl = document.getElementById("statusDot");
         const statusTextEl = document.getElementById("statusText");
+        const settingsButtonEl = document.getElementById("settingsButton");
+        const settingsMenuEl = document.getElementById("settingsMenu");
 
         let socket = null;
         let isConnected = false;
         // Track messages we just sent so we can style their echo as outgoing.
         const pendingOutgoing = [];
+        let currentTheme = "midnight";
 
         function setStatus(connected, text) {
           isConnected = connected;
@@ -377,6 +614,40 @@
           inputEl.focus();
         }
 
+        function applyTheme(theme) {
+          currentTheme = theme;
+          document.body.classList.remove(
+            "theme-midnight",
+            "theme-love",
+            "theme-terminal",
+            "theme-minimal",
+            "theme-minimal-dark"
+          );
+          document.body.classList.add(`theme-${theme}`);
+          try {
+            window.localStorage.setItem("qrconnect-theme", theme);
+          } catch (_) {
+            // ignore
+          }
+
+          const buttons = settingsMenuEl.querySelectorAll("button[data-theme]");
+          buttons.forEach((btn) => {
+            if (btn.getAttribute("data-theme") === theme) {
+              btn.classList.add("is-active");
+            } else {
+              btn.classList.remove("is-active");
+            }
+          });
+        }
+
+        function toggleSettingsMenu() {
+          settingsMenuEl.classList.toggle("settings-menu--open");
+        }
+
+        function closeSettingsMenu() {
+          settingsMenuEl.classList.remove("settings-menu--open");
+        }
+
         sendButtonEl.addEventListener("click", sendCurrentMessage);
 
         inputEl.addEventListener("keydown", (event) => {
@@ -387,8 +658,43 @@
         });
 
         window.addEventListener("load", () => {
+          // Theme
+          let storedTheme = null;
+          try {
+            storedTheme = window.localStorage.getItem("qrconnect-theme");
+          } catch (_) {
+            storedTheme = null;
+          }
+          applyTheme(storedTheme || "midnight");
+
           connect();
           inputEl.focus();
+        });
+
+        settingsButtonEl.addEventListener("click", (event) => {
+          event.stopPropagation();
+          toggleSettingsMenu();
+        });
+
+        settingsMenuEl.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof HTMLElement)) return;
+          const theme = target.getAttribute("data-theme");
+          if (!theme) return;
+          applyTheme(theme);
+          closeSettingsMenu();
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!settingsMenuEl.classList.contains("settings-menu--open")) {
+            return;
+          }
+          if (
+            !settingsMenuEl.contains(event.target) &&
+            event.target !== settingsButtonEl
+          ) {
+            closeSettingsMenu();
+          }
         });
       })();
     </script>
