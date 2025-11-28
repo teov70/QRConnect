@@ -7,6 +7,24 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>QRConnect Chat</title>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/static/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/static/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/static/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/static/site.webmanifest" />
     <style>
       :root {
         color-scheme: light dark;
@@ -260,6 +278,8 @@
 
         let socket = null;
         let isConnected = false;
+        // Track messages we just sent so we can style their echo as outgoing.
+        const pendingOutgoing = [];
 
         function setStatus(connected, text) {
           isConnected = connected;
@@ -318,8 +338,15 @@
 
           socket.addEventListener("message", (event) => {
             const text = String(event.data || "");
-            // Messages from other clients show as normal (incoming) messages.
-            addMessage(text, { outgoing: false });
+
+            // If this matches a message we just sent, treat it as outgoing.
+            let isOutgoing = false;
+            if (pendingOutgoing.length > 0 && pendingOutgoing[0] === text) {
+              pendingOutgoing.shift();
+              isOutgoing = true;
+            }
+
+            addMessage(text, { outgoing: isOutgoing });
           });
 
           socket.addEventListener("close", () => {
@@ -339,8 +366,9 @@
           if (!text || !socket || socket.readyState !== WebSocket.OPEN) {
             return;
           }
+          // Remember this text so we can style the echoed message as outgoing.
+          pendingOutgoing.push(text);
           socket.send(text);
-          addMessage(text, { outgoing: true });
           inputEl.value = "";
           inputEl.focus();
         }
@@ -362,4 +390,3 @@
     </script>
   </body>
   </html>
-

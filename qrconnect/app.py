@@ -48,6 +48,13 @@ async def get_root() -> FileResponse:
     return FileResponse(index_path)
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon() -> FileResponse:
+    """Serve the favicon for browser tabs."""
+    favicon_path = BASE_DIR / "static" / "favicon.ico"
+    return FileResponse(favicon_path)
+
+
 app.mount(
     "/static",
     StaticFiles(directory=BASE_DIR / "static"),
