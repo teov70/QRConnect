@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>QRConnect Chat</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0f172a;
+        --bg-alt: #020617;
+        --fg: #e5e7eb;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.15);
+        --border: #1e293b;
+        --danger: #f97373;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at top, #1f2937, var(--bg-alt));
+        color: var(--fg);
+        min-height: 100vh;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+      }
+
+      .app {
+        margin: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: linear-gradient(145deg, var(--bg-alt), var(--bg));
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.85);
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .header {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .title {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .pill {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        opacity: 0.85;
+      }
+
+      .status {
+        font-size: 0.78rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--danger);
+        box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.25);
+      }
+
+      .status-dot.status-dot--connected {
+        background: #22c55e;
+        box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+      }
+
+      .status-text {
+        opacity: 0.8;
+      }
+
+      .messages {
+        flex: 1;
+        padding: 12px 16px 8px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.9rem;
+      }
+
+      .message {
+        padding: 6px 10px;
+        border-radius: 10px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: pre-wrap;
+      }
+
+      .message--system {
+        background: var(--accent-soft);
+        border-color: rgba(56, 189, 248, 0.5);
+        font-size: 0.8rem;
+        opacity: 0.85;
+      }
+
+      .message--outgoing {
+        align-self: flex-end;
+        background: linear-gradient(135deg, #0ea5e9, #22c55e);
+        border-color: transparent;
+        color: #0b1120;
+      }
+
+      .message-meta {
+        display: block;
+        font-size: 0.7rem;
+        opacity: 0.7;
+        margin-bottom: 2px;
+      }
+
+      .footer {
+        padding: 10px 12px 12px;
+        border-top: 1px solid rgba(148, 163, 184, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .input-row input[type="text"] {
+        flex: 1;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.85);
+        color: var(--fg);
+        font-size: 0.9rem;
+        outline: none;
+        min-width: 0;
+      }
+
+      .input-row input[type="text"]::placeholder {
+        color: rgba(148, 163, 184, 0.7);
+      }
+
+      .input-row button {
+        border-radius: 999px;
+        border: none;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        background: radial-gradient(circle at top left, #0ea5e9, #22c55e);
+        color: #0b1120;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+      }
+
+      .input-row button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      .hint {
+        font-size: 0.72rem;
+        opacity: 0.7;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .hint span {
+        white-space: nowrap;
+      }
+
+      @media (max-width: 480px) {
+        .app {
+          margin: 0;
+          border-radius: 0;
+          max-width: none;
+        }
+
+        .header,
+        .footer {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="title">
+          <span>QRConnect</span>
+          <span class="pill">LAN chat</span>
+        </div>
+        <div class="status" id="status">
+          <span class="status-dot" id="statusDot"></span>
+          <span class="status-text" id="statusText">Connecting…</span>
+        </div>
+      </header>
+      <main class="messages" id="messages" aria-live="polite"></main>
+      <footer class="footer">
+        <div class="input-row">
+          <input
+            id="messageInput"
+            type="text"
+            autocomplete="off"
+            placeholder="Type a message"
+          />
+          <button id="sendButton" type="button">
+            <span>Send</span>
+          </button>
+        </div>
+        <div class="hint">
+          <span>Press Enter to send</span>
+          <span>Messages are shared with all devices</span>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const messagesEl = document.getElementById("messages");
+        const inputEl = document.getElementById("messageInput");
+        const sendButtonEl = document.getElementById("sendButton");
+        const statusDotEl = document.getElementById("statusDot");
+        const statusTextEl = document.getElementById("statusText");
+
+        let socket = null;
+        let isConnected = false;
+
+        function setStatus(connected, text) {
+          isConnected = connected;
+          if (connected) {
+            statusDotEl.classList.add("status-dot--connected");
+            statusTextEl.textContent = text || "Connected";
+            sendButtonEl.disabled = false;
+          } else {
+            statusDotEl.classList.remove("status-dot--connected");
+            statusTextEl.textContent = text || "Disconnected";
+            sendButtonEl.disabled = true;
+          }
+        }
+
+        function scrollToBottom() {
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function addMessage(text, options) {
+          const opts = options || {};
+          const el = document.createElement("div");
+          el.classList.add("message");
+          if (opts.system) {
+            el.classList.add("message--system");
+          }
+          if (opts.outgoing) {
+            el.classList.add("message--outgoing");
+          }
+          el.textContent = text;
+          messagesEl.appendChild(el);
+          scrollToBottom();
+        }
+
+        function connect() {
+          const protocol =
+            window.location.protocol === "https:" ? "wss" : "ws";
+          const wsUrl = protocol + "://" + window.location.host + "/ws";
+
+          try {
+            socket = new WebSocket(wsUrl);
+          } catch (e) {
+            console.error("Failed to create WebSocket:", e);
+            addMessage("[system] Could not create WebSocket connection.", {
+              system: true,
+            });
+            setStatus(false, "Error");
+            return;
+          }
+
+          setStatus(false, "Connecting…");
+
+          socket.addEventListener("open", () => {
+            setStatus(true, "Connected");
+            addMessage("[system] Connected to QRConnect.", { system: true });
+          });
+
+          socket.addEventListener("message", (event) => {
+            const text = String(event.data || "");
+            // Messages from other clients show as normal (incoming) messages.
+            addMessage(text, { outgoing: false });
+          });
+
+          socket.addEventListener("close", () => {
+            setStatus(false, "Disconnected");
+            addMessage("[system] Disconnected from server.", { system: true });
+          });
+
+          socket.addEventListener("error", (event) => {
+            console.error("WebSocket error:", event);
+            setStatus(false, "Error");
+            addMessage("[system] WebSocket error.", { system: true });
+          });
+        }
+
+        function sendCurrentMessage() {
+          const text = inputEl.value.trim();
+          if (!text || !socket || socket.readyState !== WebSocket.OPEN) {
+            return;
+          }
+          socket.send(text);
+          addMessage(text, { outgoing: true });
+          inputEl.value = "";
+          inputEl.focus();
+        }
+
+        sendButtonEl.addEventListener("click", sendCurrentMessage);
+
+        inputEl.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendCurrentMessage();
+          }
+        });
+
+        window.addEventListener("load", () => {
+          connect();
+          inputEl.focus();
+        });
+      })();
+    </script>
+  </body>
+  </html>
+
