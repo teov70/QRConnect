@@ -44,8 +44,13 @@ def main() -> None:
     lan_ip = detect_lan_ip()
     url = build_url(lan_ip, port)
 
-    qr_path = generate_qr(url)
-    show_qr_image(qr_path)
+    static_dir = Path(__file__).resolve().parent / "static"
+    static_dir.mkdir(parents=True, exist_ok=True)
+
+    qr_path = generate_qr(url, static_dir / "qrconnect_url.png")
+    # If you prefer the system image viewer to open automatically on startup,
+    # uncomment the line below.
+    # show_qr_image(qr_path)
 
     print("QRConnect server starting...")
     print(f"  LAN URL: {url}")

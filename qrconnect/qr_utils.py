@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Optional
 
 import qrcode
+from qrcode.constants import ERROR_CORRECT_M
 from PIL import Image
 
 
@@ -25,7 +26,7 @@ def generate_qr(url: str, output_path: Optional[Path] = None) -> Path:
 
     qr = qrcode.QRCode(
         version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_M,
+        error_correction=ERROR_CORRECT_M,
         box_size=10,
         border=4,
     )
@@ -33,7 +34,7 @@ def generate_qr(url: str, output_path: Optional[Path] = None) -> Path:
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white")
-    img.save(output_path)
+    img.save(output_path) # pyright: ignore[reportArgumentType]
     return output_path
 
 
