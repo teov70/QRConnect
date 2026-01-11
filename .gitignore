@@ -41,3 +41,5 @@ htmlcov/
 # QR output
 qrconnect_url.png
 
+#Uploads
+uploads/
