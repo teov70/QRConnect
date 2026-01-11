@@ -6,7 +6,8 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
-
+from fastapi import UploadFile, File
+import aiofiles as aio
 
 class ConnectionManager:
     """Manage active WebSocket connections and broadcast messages."""
@@ -39,7 +40,7 @@ app = FastAPI(title="QRConnect")
 manager = ConnectionManager()
 
 BASE_DIR = Path(__file__).resolve().parent
-
+CHUNK_SIZE = 1024 * 1024
 
 @app.get("/")
 async def get_root() -> FileResponse:
@@ -61,6 +62,20 @@ app.mount(
     name="static",
 )
 
+@app.post("/upload")
+async def upload(file: UploadFile = File(...)) -> dict:
+    safe_name = Path(file.filename).name
+    dest = BASE_DIR / "static" / "uploads" / safe_name
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    async with aio.open(dest, "wb") as out:
+
+        while True:
+            chunk = await file.read(CHUNK_SIZE)
+            if not chunk:
+                break
+            await out.write(chunk)
+
+    return {"url": f"/static/uploads/{safe_name}"}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket) -> None:
